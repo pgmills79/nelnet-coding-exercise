@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Hosting;
+using NelnetProgrammingExercise.Extensions;
 using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,14 +48,56 @@ namespace NelnetProgrammingExercise
 
             foreach (PersonModel person in persons)
             {
-                Console.WriteLine(string.Format("Pets for {0}:", person.Name));
-
-                List<PetModel> pets = _petService.GetPets();
-
-                foreach (PetModel pet in pets)
+                Console.WriteLine("***************************************************************");
+                Console.WriteLine(string.Format("Person: {0}", person.Name));
+                Console.WriteLine();
+                Console.WriteLine(string.Format("Preference Type(s): "));            
+                foreach (PetType _type in person.PreferredTypes)
                 {
-                    Console.WriteLine(string.Format("{0} would be a {1} pet. prefferred size is {2}", pet.Name, IsGood(person, pet), person.PreferredPetSize));
+                    Console.WriteLine(_type.ToString());
                 }
+                Console.WriteLine();
+
+                Console.WriteLine(string.Format("Preference Classification(s): "));
+                foreach (PetClassification _classification in person.PreferredClassifications)
+                {
+                    Console.WriteLine(_classification.ToString());
+                }
+                Console.WriteLine();
+
+                Console.WriteLine(string.Format("Preference Size(s): "));
+                foreach (PetSize _size in person.PreferredSizes)
+                {
+                    Console.WriteLine(_size.ToString());
+                }
+                Console.WriteLine();
+
+                Console.WriteLine(string.Format("Any Oppossed?: "));
+                
+                foreach (PetType _type in person.OpposedTypes.OrEmptyIfNull())
+                {
+                    Console.WriteLine(String.Format("Type: {0} ", _type.ToString()));
+                }
+
+                foreach (PetClassification _classification in person.OpposedClassifications.OrEmptyIfNull())
+                {
+                    Console.WriteLine(String.Format("Classification: {0} ", _classification.ToString()));
+                }
+
+                foreach (PetSize _size in person.OpposedSizes.OrEmptyIfNull())
+                {
+                    Console.WriteLine(String.Format("Size: {0} ", _size.ToString()));
+                }
+
+                Console.WriteLine("***************************************************************");
+
+                //List<PetModel> pets = _petService.GetPets();
+
+                //foreach (PetModel pet in pets)
+                //{
+                //    foreach(PetType t)
+                //    Console.WriteLine(string.Format("Preff for {0}:", person.Name));
+                //}
 
                 Console.WriteLine();
             }
@@ -63,12 +107,12 @@ namespace NelnetProgrammingExercise
         }
 
 
-        private static string IsGood(PersonModel person, PetModel pet)
-        {
-            return person.PreferredClassification == pet.Classification || person.PreferredType == pet.Type
-                ? "good"
-                : "bad";
-        }
+        //private static string IsGood(PersonModel person, PetModel pet)
+        //{
+        //    return person.PreferredClassification == pet.Classification || person.PreferredType == pet.Type
+        //        ? "good"
+        //        : "bad";
+        //}
 
     }
 }

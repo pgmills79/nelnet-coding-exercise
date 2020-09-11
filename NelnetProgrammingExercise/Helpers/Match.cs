@@ -19,10 +19,10 @@ namespace NelnetProgrammingExercise.Helpers
             //Good is the highest order so return 
             
 
-            if (person.PreferredType.Equals(pet.Type)) return MatchStatus.Good;
+           // if (person.PreferredType.Equals(pet.Type)) return MatchStatus.Good;
 
             //we would return 
-            if (person.PreferredClassification.Equals(pet.Classification) ) return MatchStatus.Bad;
+            //if (person.PreferredClassification.Equals(pet.Classification) ) return MatchStatus.Bad;
 
             return MatchStatus.Bad;
         }

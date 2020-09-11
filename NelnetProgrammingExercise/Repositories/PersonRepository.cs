@@ -17,16 +17,16 @@ namespace NelnetProgrammingExercise.Repositories
                 new PersonModel()
                 {
                     Name = "Dalinar",
-                    PreferredClassification = PetClassification.Mammal,
-                    PreferredType = PetType.Snake,
-                    PreferredPetSize = PetSize.Medium
+                    PreferredTypes = new List<PetType>{ PetType.Snake },
+                    PreferredClassifications = new List<PetClassification>{ PetClassification.Mammal },                    
+                    PreferredSizes = new List<PetSize>{ PetSize.Medium }
                 },
                 new PersonModel()
                 {
                     Name = "Kaladin",
-                    PreferredClassification = PetClassification.Bird,
-                    PreferredType = PetType.Goldfish,
-                    PreferredPetSize = PetSize.ExtraSmall
+                    PreferredTypes = new List<PetType>{ PetType.Goldfish },
+                    PreferredClassifications = new List<PetClassification>{ PetClassification.Bird },
+                    PreferredSizes = new List<PetSize>{ PetSize.ExtraSmall }
                 }
             };
 
