@@ -33,6 +33,17 @@ namespace NelnetProgrammingExercise.Repositories
                                PreferredClassification = PetClassification.Bird,
                                PreferredSize = PetSize.ExtraSmall,
                            }
+                    ),
+                  new DerivedPerson
+                        (
+                           new PersonModel()
+                            {
+                               Name = "Paul Don't Like dogs",
+                               PreferredType = PetType.Goldfish,
+                               OpposedType = PetType.Dog,
+                               PreferredClassification = PetClassification.Bird,
+                               PreferredSize = PetSize.ExtraSmall,
+                           }
                     )
              };               
 
