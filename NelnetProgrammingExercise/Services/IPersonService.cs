@@ -8,5 +8,7 @@ namespace NelnetProgrammingExercise.Services
     public interface IPersonService
     {
         List<DerivedPerson> GetPersons();
+
+        MatchStatus GetMatchStatus(PersonModel person, PetModel pet);
     }
 }

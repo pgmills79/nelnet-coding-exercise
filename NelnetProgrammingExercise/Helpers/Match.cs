@@ -1,30 +1,67 @@
-﻿using NelnetProgrammingExercise.Models;
+﻿using NelnetProgrammingExercise.Extensions;
+using NelnetProgrammingExercise.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NelnetProgrammingExercise.Helpers
 {
-    public static class Match
-    {
+    public class Match    {
 
-        public static MatchStatus IsGoodMatch(PersonModel person, PetModel pet) 
+        public virtual MatchStatus Status { get; set; }
+
+        public Match() { }
+
+        //method that we will derive from (The base classed is called if NO opposed attributes
+        public virtual MatchStatus GetStatus(PersonModel person, PetModel pet) 
         {
-            //1.Type
-            //2.Classification
-            //3.Weight
-            //4.Default Type / Classification / Weight on person object
-           
-            
-            //Good is the highest order so return 
-            
+                  
+                return
+                    (person.PreferredType == pet.Type
+                    || person.PreferredClassification == pet.Classification
+                    || person.PreferredSize == pet.Size()
+                    ) ? MatchStatus.Good : MatchStatus.Bad;
+        }   
 
-           // if (person.PreferredType.Equals(pet.Type)) return MatchStatus.Good;
 
-            //we would return 
-            //if (person.PreferredClassification.Equals(pet.Classification) ) return MatchStatus.Bad;
+    }
 
-            return MatchStatus.Bad;
+    public class DerivedMatch : Match
+    {
+        //There are opposed attributes so we inherite and oveeride the defaul method from base class
+        public override MatchStatus GetStatus(PersonModel person, PetModel pet)
+        {            
+
+            //Type is priorityy #1 (hierarchy) and is opposed we want to return bad match
+            if (person.OpposedType == pet.Type)
+                return MatchStatus.Bad;
+
+            //Type is priority #1 (hierarchy)  so return good if preferred is same
+            if (person.PreferredType == pet.Type)
+                return MatchStatus.Good;
+
+            //Type classification is  priority #2 (hierarchy) so return good 
+            //if preferred is same (we already accounted for Type above)
+            if (person.PreferredClassification == pet.Classification)
+                return MatchStatus.Good;
+
+            //Size is  priority #3 (hierarchy) so return good 
+            //if preferred is same and opposed Classification is not opposed
+            if (person.PreferredSize == pet.Size() && person.OpposedClassification != pet.Classification)
+                return MatchStatus.Good;
+
+            //If the classification is opposed at this point then the match is bad
+            if (person.OpposedSize == pet.Size())
+                return MatchStatus.Bad;
+
+
+            //default to good match
+            return MatchStatus.Good;
         }
+
+       
+
+
+
     }
 }

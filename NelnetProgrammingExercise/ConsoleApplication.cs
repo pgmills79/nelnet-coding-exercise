@@ -1,21 +1,15 @@
-﻿using Microsoft.Extensions.Hosting;
-using NelnetProgrammingExercise.Extensions;
+﻿using NelnetProgrammingExercise.Extensions;
 using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NelnetProgrammingExercise
 {
-    class ConsoleApplication : IHostedService, IDisposable
+    class ConsoleApplication
     {
         private readonly IPersonService _personService;
-        private readonly IPetService _petService;
-        private Timer _timer;        
+        private readonly IPetService _petService;           
 
         public ConsoleApplication(IPersonService persons, IPetService pets)
         {
@@ -23,25 +17,7 @@ namespace NelnetProgrammingExercise
             _petService = pets;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            _timer = new Timer(Run, null, TimeSpan.Zero,
-                TimeSpan.FromDays(10)); //every 10 days
-
-            return Task.CompletedTask;
-        }
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _timer?.Change(Timeout.Infinite, 0);
-            return Task.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            _timer?.Dispose();
-        }
-
-        private void Run(object state)
+        public void Run()
         {
 
             List<DerivedPerson> persons = _personService.GetPersons();
@@ -61,37 +37,26 @@ namespace NelnetProgrammingExercise
 
                 //now is the animal a good fit
                 Console.WriteLine(string.Format("Animals and are they a good fit for {0}?: ", person.Name));
-                foreach (PetModel _pet in pets)
+                foreach (PetModel pet in pets)
                 {
-                    Console.WriteLine(String.Format("Animal: {0} ", _pet.Name));
-                    Console.WriteLine(String.Format("Fit?: {0} ", "This is a to do"));
+                    Console.WriteLine(String.Format("Animal: {0} ", pet.Name));
+
+                    Console.WriteLine(
+                        String.Format("Type: {0}, Classification: {1}, Size: {2} ", 
+                        pet.Type, 
+                        pet.Classification,
+                        pet.Size()));
+
+                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", _personService.GetMatchStatus(person, pet)));
                     Console.WriteLine();
                 }
 
                 Console.WriteLine("***************************************************************");
-
-                
-
-                //foreach (PetModel pet in pets)
-                //{
-                //    foreach(PetType t)
-                //    Console.WriteLine(string.Format("Preff for {0}:", person.Name));
-                //}
-
-                Console.WriteLine();
             }
 
             Console.ReadLine();         
 
         }
-
-
-        //private static string IsGood(PersonModel person, PetModel pet)
-        //{
-        //    return person.PreferredClassification == pet.Classification || person.PreferredType == pet.Type
-        //        ? "good"
-        //        : "bad";
-        //}
 
     }
 }

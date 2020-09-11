@@ -1,8 +1,7 @@
-﻿using NelnetProgrammingExercise.Models;
+﻿using NelnetProgrammingExercise.Helpers;
+using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NelnetProgrammingExercise.Repositories
 {
@@ -40,6 +39,26 @@ namespace NelnetProgrammingExercise.Repositories
             return persons;
         }
 
+        public MatchStatus GetMatchStatus(PersonModel person, PetModel pet) 
+        {
+            //if there are ANY opposed values we call the derived class
+            if (
+                person.OpposedType != PetType.None
+                ||
+                person.OpposedClassification != PetClassification.None
+                ||
+                person.OpposedSize != PetSize.None
+                )
+            {
+                //then we implement the opposed derived class
+                DerivedMatch derivedClass = new DerivedMatch();
+                return derivedClass.GetStatus(person, pet);
+            }
+            else
+                //there were no oppositions so default check
+                return new Match().GetStatus(person, pet);
+        
+        }
 
     }
 }

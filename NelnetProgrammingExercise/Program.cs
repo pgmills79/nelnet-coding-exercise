@@ -1,40 +1,44 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Repositories;
 using NelnetProgrammingExercise.Services;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NelnetProgrammingExercise
 {
     class Program
-    {       
+    {
 
-        
+        private static IServiceProvider _serviceProvider;
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-
-            var host = new HostBuilder()
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddSingleton<IPersonService, PersonRepository>();
-                    services.AddSingleton<IPetService, PetRepository>();
-                    services.AddHostedService<ConsoleApplication>();
-                })
-                .UseConsoleLifetime()
-                .Build();
-
-
-            using (host)
-            {
-                await host.StartAsync();
-                await host.WaitForShutdownAsync();
-            }
-
+            //DI (injection)
+            RegisterServices();
+            IServiceScope scope = _serviceProvider.CreateScope();
+            scope.ServiceProvider.GetRequiredService<ConsoleApplication>().Run();
+            DisposeServices();
         }
-       
+
+        private static void RegisterServices()
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<IPersonService, PersonRepository>();
+            services.AddSingleton<IPetService, PetRepository>();
+            services.AddSingleton<ConsoleApplication>();
+            _serviceProvider = services.BuildServiceProvider(true);
+        }
+
+        private static void DisposeServices()
+        {
+            if (_serviceProvider == null)
+            {
+                return;
+            }
+            if (_serviceProvider is IDisposable)
+            {
+                ((IDisposable)_serviceProvider).Dispose();
+            }
+        }
+
     }
 }

@@ -1,8 +1,4 @@
-﻿using NelnetProgrammingExercise.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace NelnetProgrammingExercise.Models
 {
     public class PersonModel
