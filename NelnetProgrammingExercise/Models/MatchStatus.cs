@@ -4,13 +4,9 @@ using System.Text;
 
 namespace NelnetProgrammingExercise.Models
 {
-
-    public enum PetClassification
+    public enum MatchStatus
     {
-        Mammal,
-        Arachnid,
-        Fish,
-        Bird,
-        Reptile
+        Bad,
+        Good
     }
 }

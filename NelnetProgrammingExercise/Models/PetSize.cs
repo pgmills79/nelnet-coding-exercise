@@ -4,13 +4,14 @@ using System.Text;
 
 namespace NelnetProgrammingExercise.Models
 {
-
-    public enum PetClassification
+    
+    public enum PetSize
     {
-        Mammal,
-        Arachnid,
-        Fish,
-        Bird,
-        Reptile
+        ExtraSmall,
+        Small,
+        Medium,
+        Large,
+        ExtraLarge
     }
+    
 }
