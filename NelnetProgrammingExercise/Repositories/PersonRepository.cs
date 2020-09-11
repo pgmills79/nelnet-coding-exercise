@@ -8,27 +8,34 @@ namespace NelnetProgrammingExercise.Repositories
 {
     public class PersonRepository : IPersonService
     {
-        private static List<PersonModel> persons;      
+        private static List<DerivedPerson> persons;      
 
-        public List<PersonModel> GetPersons()
+        public List<DerivedPerson> GetPersons()
         {
-            persons = new List<PersonModel>
+
+            persons = new List<DerivedPerson>()
             {
-                new PersonModel()
-                {
-                    Name = "Dalinar",
-                    PreferredTypes = new List<PetType>{ PetType.Snake },
-                    PreferredClassifications = new List<PetClassification>{ PetClassification.Mammal },                    
-                    PreferredSizes = new List<PetSize>{ PetSize.Medium }
-                },
-                new PersonModel()
-                {
-                    Name = "Kaladin",
-                    PreferredTypes = new List<PetType>{ PetType.Goldfish },
-                    PreferredClassifications = new List<PetClassification>{ PetClassification.Bird },
-                    PreferredSizes = new List<PetSize>{ PetSize.ExtraSmall }
-                }
-            };
+                new DerivedPerson
+                        (
+                           new PersonModel()
+                            {
+                               Name = "Dalinar",
+                               PreferredType = PetType.Snake,
+                               PreferredClassification = PetClassification.Mammal,
+                               PreferredSize = PetSize.Medium,
+                           }                           
+                    ),
+                 new DerivedPerson
+                        (
+                           new PersonModel()
+                            {
+                               Name = "Kaladin",
+                               PreferredType = PetType.Goldfish,
+                               PreferredClassification = PetClassification.Bird,
+                               PreferredSize = PetSize.ExtraSmall,
+                           }
+                    )
+             };               
 
             return persons;
         }

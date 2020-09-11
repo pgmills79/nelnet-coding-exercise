@@ -11,6 +11,7 @@ namespace NelnetProgrammingExercise.Models
         Arachnid,
         Fish,
         Bird,
-        Reptile
+        Reptile,
+        None
     }
 }

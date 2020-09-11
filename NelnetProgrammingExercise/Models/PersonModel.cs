@@ -7,36 +7,48 @@ namespace NelnetProgrammingExercise.Models
 {
     public class PersonModel
     {
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public List<PetType> PreferredTypes { get; set; }
-        public List<PetType> OpposedTypes { get; set; }
+        public virtual PetType PreferredType { get; set; }
+        public virtual PetType OpposedType { get; set; }
 
-        public List<PetClassification> PreferredClassifications { get; set; }
-        public List<PetClassification> OpposedClassifications { get; set; }
+        public virtual PetClassification PreferredClassification { get; set; }
+        public virtual PetClassification OpposedClassification { get; set; }
 
-        public List<PetSize> PreferredSizes { get; set; }
-        public List<PetSize> OpposedSizes { get; set; }
+        public virtual PetSize PreferredSize { get; set; }
+        public virtual PetSize OpposedSize { get; set; }
 
         public PersonModel() { }
 
+        public PersonModel(PersonModel person) 
+                    : this(person.Name, 
+                    person.PreferredType, 
+                    person.OpposedType = PetType.None, 
+                    person.PreferredClassification, 
+                    person.OpposedClassification = PetClassification.None, 
+                    person.PreferredSize,
+                    person.OpposedSize = PetSize.None) { }
+
         public PersonModel( string name, 
-                            List<PetType> preferredTypes = null, 
-                            List<PetType> opposedTypes = null, 
-                            List<PetClassification> preferredClassifications = null,
-                            List<PetClassification> opposedClassifications = null,
-                            List<PetSize> preferredSizes = null,
-                            List<PetSize> opposedSizes = null)
+                            PetType preferredType = PetType.None, 
+                            PetType opposedType = PetType.None, 
+                            PetClassification preferredClassification = PetClassification.None,
+                            PetClassification opposedClassification = PetClassification.None,
+                            PetSize preferredSize = PetSize.None,
+                            PetSize opposedSize = PetSize.None)
         {
-            PreferredTypes = preferredTypes;
-            OpposedTypes = opposedTypes.RemovePreferredTypeFromOpposed(PreferredTypes);
-
-            PreferredClassifications = preferredClassifications;
-            opposedClassifications = opposedClassifications.RemovePreferredClassifictionsFromOpposed(PreferredClassifications);
-
-            PreferredSizes = preferredSizes;
-            OpposedSizes = opposedSizes.RemovePreferredSizesFromOpposed(PreferredSizes);
-
+            Name = name;
+            PreferredType = preferredType;
+            OpposedType = opposedType;
+            PreferredClassification = preferredClassification;
+            OpposedClassification = opposedClassification;
+            PreferredSize = preferredSize;
+            OpposedSize = opposedSize;
         }
+    }
+
+    public class DerivedPerson : PersonModel
+    {
+        public DerivedPerson(PersonModel person) : base(person) { }
     }
 }

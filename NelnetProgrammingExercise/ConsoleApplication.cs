@@ -44,7 +44,7 @@ namespace NelnetProgrammingExercise
         private void Run(object state)
         {
 
-            List<PersonModel> persons = _personService.GetPersons();
+            List<DerivedPerson> persons = _personService.GetPersons();
             List<PetModel> pets = _petService.GetPets();
 
             foreach (PersonModel person in persons)
@@ -52,45 +52,12 @@ namespace NelnetProgrammingExercise
                 Console.WriteLine("***************************************************************");
                 Console.WriteLine(string.Format("Person: {0}", person.Name));
                 Console.WriteLine();
-                Console.WriteLine(string.Format("Preference Type(s): "));            
-                foreach (PetType _type in person.PreferredTypes)
-                {
-                    Console.WriteLine(_type.ToString());
-                }
-                Console.WriteLine();
-
-                Console.WriteLine(string.Format("Preference Classification(s): "));
-                foreach (PetClassification _classification in person.PreferredClassifications)
-                {
-                    Console.WriteLine(_classification.ToString());
-                }
-                Console.WriteLine();
-
-                Console.WriteLine(string.Format("Preference Size(s): "));
-                foreach (PetSize _size in person.PreferredSizes)
-                {
-                    Console.WriteLine(_size.ToString());
-                }
-                Console.WriteLine();
-
-                Console.WriteLine(string.Format("Any Oppossed?: "));
-                
-                foreach (PetType _type in person.OpposedTypes.OrEmptyIfNull())
-                {
-                    Console.WriteLine(String.Format("Type: {0} ", _type.ToString()));
-                }
-
-                foreach (PetClassification _classification in person.OpposedClassifications.OrEmptyIfNull())
-                {
-                    Console.WriteLine(String.Format("Classification: {0} ", _classification.ToString()));
-                }
-
-                foreach (PetSize _size in person.OpposedSizes.OrEmptyIfNull())
-                {
-                    Console.WriteLine(String.Format("Size: {0} ", _size.ToString()));
-                }
-
-                
+                Console.WriteLine(string.Format("Preference Type: {0}", person.PreferredType));
+                Console.WriteLine(string.Format("Preference Classification: {0}", person.PreferredClassification));
+                Console.WriteLine(string.Format("Preference Size: {0}", person.PreferredSize));
+                Console.WriteLine(string.Format("Opposed Type: {0}", person.OpposedType));
+                Console.WriteLine(string.Format("Opposed Classification: {0}", person.OpposedClassification));
+                Console.WriteLine(string.Format("Opposed Size: {0}", person.OpposedSize));
 
                 //now is the animal a good fit
                 Console.WriteLine(string.Format("Animals and are they a good fit for {0}?: ", person.Name));

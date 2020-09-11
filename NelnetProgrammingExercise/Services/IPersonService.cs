@@ -7,6 +7,6 @@ namespace NelnetProgrammingExercise.Services
 {
     public interface IPersonService
     {
-        List<PersonModel> GetPersons();
+        List<DerivedPerson> GetPersons();
     }
 }

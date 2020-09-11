@@ -14,6 +14,7 @@ namespace NelnetProgrammingExercise.Models
         Betta,
         Rat,
         Parrot,
-        Canary
+        Canary,
+        None
     }
 }
