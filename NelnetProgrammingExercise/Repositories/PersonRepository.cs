@@ -7,44 +7,17 @@ namespace NelnetProgrammingExercise.Repositories
 {
     public class PersonRepository : IPersonService
     {
-        private static List<DerivedPerson> persons;      
+        private static List<Person> persons;      
 
-        public List<DerivedPerson> GetPersons()
+        public List<Person> GetPersons()
         {
 
-            persons = new List<DerivedPerson>()
-            {
-                new DerivedPerson
-                        (
-                           new PersonModel()
-                            {
-                               Name = "Dalinar",
-                               PreferredType = PetType.Snake,
-                               PreferredClassification = PetClassification.Mammal,
-                               PreferredSize = PetSize.Medium,
-                           }                           
-                    ),
-                 new DerivedPerson
-                        (
-                           new PersonModel()
-                            {
-                               Name = "Kaladin",
-                               PreferredType = PetType.Goldfish,
-                               PreferredClassification = PetClassification.Bird,
-                               PreferredSize = PetSize.ExtraSmall,
-                           }
-                    ),
-                  new DerivedPerson
-                        (
-                           new PersonModel()
-                            {
-                               Name = "Paul Don't Like dogs",
-                               PreferredType = PetType.Goldfish,
-                               OpposedType = PetType.Dog,
-                               PreferredClassification = PetClassification.Bird,
-                               PreferredSize = PetSize.ExtraSmall,
-                           }
-                    )
+            persons = new List<Person>()
+            {   
+                new Person(name: "Dalinar", preferredType: PetType.Snake, preferredClassification:   PetClassification.Mammal, preferredSize: PetSize.Medium),
+                new Person(name: "Kaladin", preferredType: PetType.Goldfish, preferredClassification:   PetClassification.Bird, preferredSize: PetSize.ExtraSmall),
+                new Person(name: "Paul Don't Like dogs", preferredType: PetType.Goldfish,opposedType: PetType.Dog, preferredClassification:   PetClassification.Bird, preferredSize: PetSize.ExtraSmall),
+                new Person(name: "Opposetd type negative everythiung", opposedType: PetType.Dog, preferredSize: PetSize.Medium, preferredType: PetType.Dog, preferredClassification: PetClassification.Mammal)
              };               
 
             return persons;

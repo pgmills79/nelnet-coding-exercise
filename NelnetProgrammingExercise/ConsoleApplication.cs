@@ -20,8 +20,8 @@ namespace NelnetProgrammingExercise
         public void Run()
         {
 
-            List<DerivedPerson> persons = _personService.GetPersons();
-            List<PetModel> pets = _petService.GetPets();
+            List<Person> persons = _personService.GetPersons();
+            List<Pet> pets = _petService.GetPets();
 
             foreach (PersonModel person in persons)
             {

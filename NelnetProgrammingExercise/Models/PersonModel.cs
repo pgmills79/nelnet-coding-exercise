@@ -15,23 +15,23 @@ namespace NelnetProgrammingExercise.Models
         public virtual PetSize OpposedSize { get; set; }
 
         public PersonModel() { }
+       
+    }
+   
 
-        public PersonModel(PersonModel person) 
-                    : this(person.Name, 
-                    person.PreferredType, 
-                    person.OpposedType = PetType.None, 
-                    person.PreferredClassification, 
-                    person.OpposedClassification = PetClassification.None, 
-                    person.PreferredSize,
-                    person.OpposedSize = PetSize.None) { }
+    public class Person : PersonModel
+    {
+        public Person() { }       
 
-        public PersonModel( string name, 
-                            PetType preferredType = PetType.None, 
-                            PetType opposedType = PetType.None, 
+        public Person(      
+                            string name,
+                            PetType preferredType = PetType.None,
+                            PetType opposedType = PetType.None,
                             PetClassification preferredClassification = PetClassification.None,
                             PetClassification opposedClassification = PetClassification.None,
                             PetSize preferredSize = PetSize.None,
-                            PetSize opposedSize = PetSize.None)
+                            PetSize opposedSize = PetSize.None
+                       ) 
         {
             Name = name;
             PreferredType = preferredType;
@@ -41,10 +41,5 @@ namespace NelnetProgrammingExercise.Models
             PreferredSize = preferredSize;
             OpposedSize = opposedSize;
         }
-    }
-
-    public class DerivedPerson : PersonModel
-    {
-        public DerivedPerson(PersonModel person) : base(person) { }
     }
 }

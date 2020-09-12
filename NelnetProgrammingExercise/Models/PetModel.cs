@@ -10,7 +10,14 @@ namespace NelnetProgrammingExercise.Models
 
         public PetModel() { }
 
-        public PetModel(string name, PetClassification classification, PetType type, double weight)
+
+    }
+
+    public class Pet : PetModel
+    {
+        public Pet() { }
+
+        public Pet(string name, PetClassification classification, PetType type, double weight)
         {
             Name = name;
             Classification = classification;
