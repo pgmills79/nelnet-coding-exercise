@@ -9,7 +9,7 @@ namespace NelnetProgrammingExercise.Helpers
 
         public Match() { }
 
-        //method that we will derive from (The base classed is called if NO opposed attributes)
+        //method that we will derive from (base classed is called if NO opposed attributes)
         public virtual MatchStatus GetStatus(Person person, Pet pet) 
         {
                   
