@@ -7,6 +7,6 @@ namespace NelnetProgrammingExercise.Services
     {
         List<Person> GetPersons();
 
-        MatchStatus GetMatchStatus(PersonModel person, PetModel pet);
+        MatchStatus GetMatchStatus(Person person, Pet pet);
     }
 }

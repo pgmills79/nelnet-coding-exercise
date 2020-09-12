@@ -1,6 +1,7 @@
 ﻿using NelnetProgrammingExercise.Helpers;
 using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
+using NelnetProgrammingExercise.Extensions;
 using System.Collections.Generic;
 
 namespace NelnetProgrammingExercise.Repositories
@@ -13,26 +14,22 @@ namespace NelnetProgrammingExercise.Repositories
         {
 
             persons = new List<Person>()
-            {   
+            {
                 new Person(name: "Dalinar", preferredType: PetType.Snake, preferredClassification:   PetClassification.Mammal, preferredSize: PetSize.Medium),
                 new Person(name: "Kaladin", preferredType: PetType.Goldfish, preferredClassification:   PetClassification.Bird, preferredSize: PetSize.ExtraSmall),
                 new Person(name: "Paul Don't Like dogs", preferredType: PetType.Goldfish,opposedType: PetType.Dog, preferredClassification:   PetClassification.Bird, preferredSize: PetSize.ExtraSmall),
                 new Person(name: "Opposetd type negative everythiung", opposedType: PetType.Dog, preferredSize: PetSize.Medium, preferredType: PetType.Dog, preferredClassification: PetClassification.Mammal)
-             };               
-
+            };
+           
+            persons = Methods.SetSameOppossedToNone(persons);
+            
             return persons;
         }
 
-        public MatchStatus GetMatchStatus(PersonModel person, PetModel pet) 
+        public MatchStatus GetMatchStatus(Person person, Pet pet) 
         {
             //if there are ANY opposed values we call the derived class
-            if (
-                person.OpposedType != PetType.None
-                ||
-                person.OpposedClassification != PetClassification.None
-                ||
-                person.OpposedSize != PetSize.None
-                )
+            if (person.AnyOpposed())
             {
                 //then we implement the opposed derived class
                 DerivedMatch derivedClass = new DerivedMatch();

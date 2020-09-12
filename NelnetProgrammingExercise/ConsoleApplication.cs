@@ -23,7 +23,7 @@ namespace NelnetProgrammingExercise
             List<Person> persons = _personService.GetPersons();
             List<Pet> pets = _petService.GetPets();
 
-            foreach (PersonModel person in persons)
+            foreach (Person person in persons)
             {
                 Console.WriteLine("***************************************************************");
                 Console.WriteLine(string.Format("Person: {0}", person.Name));
@@ -37,7 +37,7 @@ namespace NelnetProgrammingExercise
 
                 //now is the animal a good fit
                 Console.WriteLine(string.Format("Animals and are they a good fit for {0}?: ", person.Name));
-                foreach (PetModel pet in pets)
+                foreach (Pet pet in pets)
                 {
                     Console.WriteLine(String.Format("Animal: {0} ", pet.Name));
 

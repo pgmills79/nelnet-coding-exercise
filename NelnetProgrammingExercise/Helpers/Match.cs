@@ -1,8 +1,5 @@
 ﻿using NelnetProgrammingExercise.Extensions;
 using NelnetProgrammingExercise.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NelnetProgrammingExercise.Helpers
 {
@@ -12,8 +9,8 @@ namespace NelnetProgrammingExercise.Helpers
 
         public Match() { }
 
-        //method that we will derive from (The base classed is called if NO opposed attributes
-        public virtual MatchStatus GetStatus(PersonModel person, PetModel pet) 
+        //method that we will derive from (The base classed is called if NO opposed attributes)
+        public virtual MatchStatus GetStatus(Person person, Pet pet) 
         {
                   
                 return
@@ -29,7 +26,7 @@ namespace NelnetProgrammingExercise.Helpers
     public class DerivedMatch : Match
     {
         //There are opposed attributes so we inherite and oveeride the defaul method from base class
-        public override MatchStatus GetStatus(PersonModel person, PetModel pet)
+        public override MatchStatus GetStatus(Person person, Pet pet)
         {            
 
             //Type is priorityy #1 (hierarchy) and is opposed we want to return bad match
@@ -49,6 +46,8 @@ namespace NelnetProgrammingExercise.Helpers
             //if preferred is same and opposed Classification is not opposed
             if (person.PreferredSize == pet.Size() && person.OpposedClassification != pet.Classification)
                 return MatchStatus.Good;
+            if (person.PreferredSize == pet.Size() && person.OpposedClassification == pet.Classification)
+                return MatchStatus.Bad;
 
             //If the classification is opposed at this point then the match is bad
             if (person.OpposedSize == pet.Size())
@@ -64,4 +63,6 @@ namespace NelnetProgrammingExercise.Helpers
 
 
     }
+
+   
 }
