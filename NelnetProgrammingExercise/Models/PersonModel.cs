@@ -25,13 +25,6 @@ namespace NelnetProgrammingExercise.Models
     public class Person : PersonModel
     {
 
-        public override PetType PreferredType { get; set; }
-
-        public override PetClassification PreferredClassification { get; set; }
-
-        public override PetSize PreferredSize { get; set; }
-
-        public override MatchStatus Match { get ; set; }
 
         public Person() { }       
 
