@@ -1,6 +1,9 @@
 ﻿
+using Dapper.Contrib.Extensions;
+
 namespace NelnetProgrammingExercise.Models
 {
+    [Table("pet")]
     public class PetModel 
     {
         public string Name { get; set; }

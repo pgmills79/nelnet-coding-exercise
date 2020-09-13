@@ -1,6 +1,9 @@
 ﻿
+using Dapper.Contrib.Extensions;
+
 namespace NelnetProgrammingExercise.Models
 {
+    [Table("person")]
     public class PersonModel
     {
         public virtual string Name { get; set; }

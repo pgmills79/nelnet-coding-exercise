@@ -1,16 +1,20 @@
-﻿using NelnetProgrammingExercise.Models;
+﻿using Dapper;
+using MySql.Data.MySqlClient;
+using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 
 namespace NelnetProgrammingExercise.Repositories
 {
     public class PetRepository : IPetService
     {
-        private static List<Pet> Pets;
+        private static List<Pet> pets;
 
         public List<Pet> GetPets()
         {
-            Pets = new List<Pet>
+            pets = new List<Pet>
              {
                 new Pet(name: "Garfield", classification:  PetClassification.Mammal,type: PetType.Cat, weight: 20.0),
                 new Pet(name: "Odie", classification:  PetClassification.Mammal,type: PetType.Dog, weight: 15.0),
@@ -23,7 +27,30 @@ namespace NelnetProgrammingExercise.Repositories
                 new Pet(name: "Tweety", classification:  PetClassification.Bird,type: PetType.Canary, weight: 0.5)
              };
 
-            return Pets;
+            return pets;
         }
     }
+
+    #region "Extra Credit Dapper"
+
+    public class PetRepositorys : IPetService
+    {
+        private static List<Pet> pets;
+
+        public List<Pet> GetPets()
+        {
+            using (var con = new MySqlConnection(ConfigurationManager.ConnectionStrings["LocalServer"].ToString()))
+            {
+                pets = con.Query<Pet>("SELECT * FROM pet").ToList();
+            }
+
+            return pets;
+        }
+    }
+
+    #endregion
+
+
+
+
 }
