@@ -6,6 +6,7 @@ using NelnetProgrammingExercise.Repositories;
 using NelnetProgrammingExercise.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +18,7 @@ namespace IntegrationTests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IPersonService, PersonRepository>();
+            serviceCollection.AddSingleton<IPetService, PetRepository>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }
 
@@ -29,11 +31,82 @@ namespace IntegrationTests
 
         private ServiceProvider _serviceProvide;
         private IPersonService _personService;
+        private IPetService _petService;
 
         public UnitTests(ServiceFixture fixture)
         {
             _serviceProvide = fixture.ServiceProvider;
             _personService = _serviceProvide.GetService<IPersonService>();
+            _petService = _serviceProvide.GetService<IPetService>();
+        }
+
+        [Fact]
+        public void GetPersons_Should_Return_Items()
+        {
+            //arrange
+            List<Person> persons = _personService.GetPersons();
+
+            //Act
+            bool statusResult = persons.Count > 0;
+
+            //Assert
+            bool expectedResult = true;
+            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
+        }
+
+        [Fact]
+        public void GetPets_Should_Return_Items()
+        {
+            //arrange
+            List<Pet> pets = _petService.GetPets();
+
+            //Act
+            bool statusResult = pets.Count > 0;
+
+            //Assert
+            bool expectedResult = true;
+            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
+        }
+
+        [Fact]
+        public void All_Matches_Should_Default_True()
+        {
+            //arrange
+            List<Person> persons = _personService.GetPersons();
+
+            //Act
+            int statusResult = persons.Where(p => p.Match == MatchStatus.Bad).Count();
+
+            //Assert
+            int expectedResult = 0;
+            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
+        }
+
+        [Fact]
+        public void Some_Matches_Should_Be_Overidden()
+        {
+            //arrange
+            List<Person> persons = _personService.GetPersons();
+            List<Pet> pets = _petService.GetPets();
+
+            //Act
+            foreach (Person person in persons)
+            {
+                foreach (Pet pet in pets)
+                {
+                    person.Match = _personService.GetMatchStatus(person, pet);
+                }
+            }            
+        
+            bool statusResult = persons.Where(p => p.Match == MatchStatus.Bad).Count() > 0;
+
+            //Assert
+            bool expectedResult = true;
+            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
         }
 
         [Fact]
@@ -49,8 +122,6 @@ namespace IntegrationTests
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;
             Assert.Equal(expectedResult.ToString(), statusResult.ToString());
-
-            //dispose of service
            
         }
 
@@ -70,6 +141,7 @@ namespace IntegrationTests
 
         }
 
+     
         [Fact]
         public void Preffered_Size_Opposed_Classification_Should_Return_Bad()
         {
@@ -106,7 +178,7 @@ namespace IntegrationTests
         public void Same_Preffered_Type_Opposed_Should_Set_Opposed_To_None()
         {
             //arrange
-            List<Person> persons = new List<Person>() { new Person("Dogs", preferredType: PetType.Dog, opposedType: PetType.Dog) };            
+            List<Person> persons = new List<Person>() { new Person("Dogs", preferredType: PetType.Dog, opposedType: PetType.Dog) };
             Methods.SetSameOppossedToNone(persons);
 
             //Act
@@ -148,7 +220,10 @@ namespace IntegrationTests
             PetSize expectedResult = PetSize.None;
             Assert.Equal(expectedResult.ToString(), statusResult.ToString());
 
-        }
+        }  
+
+
+
 
         [Fact]
         public void Opposed_Type_Should_Return_Same_Opposed_Type()

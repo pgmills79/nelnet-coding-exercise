@@ -14,13 +14,25 @@ namespace NelnetProgrammingExercise.Models
         public virtual PetSize PreferredSize { get; set; }
         public virtual PetSize OpposedSize { get; set; }
 
+        public virtual MatchStatus Match { get; set; }
+
         public PersonModel() { }
-       
+
+
     }
    
 
     public class Person : PersonModel
     {
+
+        public override PetType PreferredType { get; set; }
+
+        public override PetClassification PreferredClassification { get; set; }
+
+        public override PetSize PreferredSize { get; set; }
+
+        public override MatchStatus Match { get ; set; }
+
         public Person() { }       
 
         public Person(      
@@ -30,7 +42,8 @@ namespace NelnetProgrammingExercise.Models
                             PetClassification preferredClassification = PetClassification.None,
                             PetClassification opposedClassification = PetClassification.None,
                             PetSize preferredSize = PetSize.None,
-                            PetSize opposedSize = PetSize.None
+                            PetSize opposedSize = PetSize.None,
+                            MatchStatus match = MatchStatus.Good
                        ) 
         {
             Name = name;
@@ -40,6 +53,7 @@ namespace NelnetProgrammingExercise.Models
             OpposedClassification = opposedClassification;
             PreferredSize = preferredSize;
             OpposedSize = opposedSize;
+            Match = match;
         }
     }
 }
