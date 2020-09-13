@@ -55,7 +55,8 @@ namespace NelnetProgrammingExercise.Repositories
 
         public List<Person> GetPersons()
         {
-            using (var con = new MySqlConnection(ConfigurationManager.ConnectionStrings["LocalServer"].ToString()))
+            //I WOULD NEVER put the string directly here.  Was just having problems Xunit reading config file
+            using (var con = new MySqlConnection("server=localhost;uid =pmills;port=3306;pwd=^X2e34cZM0GI;database=practice"))
             {
                 persons = con.Query<Person>("SELECT * FROM person").ToList();
             }
