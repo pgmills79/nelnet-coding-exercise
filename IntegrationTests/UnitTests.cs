@@ -71,45 +71,6 @@ namespace IntegrationTests
         }
 
         [Fact]
-        public void All_Matches_Should_Default_True()
-        {
-            //arrange
-            List<Person> persons = _personService.GetPersons();
-
-            //Act
-            int statusResult = persons.Where(p => p.Match == MatchStatus.Bad).Count();
-
-            //Assert
-            int expectedResult = 0;
-            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
-
-        }
-
-        [Fact]
-        public void Some_Matches_Should_Be_Overidden()
-        {
-            //arrange
-            List<Person> persons = _personService.GetPersons();
-            List<Pet> pets = _petService.GetPets();
-
-            //Act
-            foreach (Person person in persons)
-            {
-                foreach (Pet pet in pets)
-                {
-                    person.Match = _personService.GetMatchStatus(person, pet);
-                }
-            }            
-        
-            bool statusResult = persons.Where(p => p.Match == MatchStatus.Bad).Count() > 0;
-
-            //Assert
-            bool expectedResult = true;
-            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
-
-        }
-
-        [Fact]
         public void Match_Should_Return_Bad()
         {
             //arrange

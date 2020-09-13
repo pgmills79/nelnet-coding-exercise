@@ -1,4 +1,5 @@
 ﻿using NelnetProgrammingExercise.Extensions;
+using NelnetProgrammingExercise.Helpers;
 using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
 using System;
@@ -47,9 +48,7 @@ namespace NelnetProgrammingExercise
                         pet.Classification,
                         pet.Size()));
 
-                    person.Match = _personService.GetMatchStatus(person, pet);
-
-                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", person.Match));
+                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", _personService.GetMatchStatus(person, pet)));
                     Console.WriteLine();
                 }
 
