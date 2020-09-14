@@ -45,7 +45,7 @@ namespace NelnetProgrammingExercise.Repositories
 
         public List<Person> GetItems()
         {
-            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            using (var con = new MySqlConnection(Utils.GetHeWhoMustNotBeNamed()))
             {
                 persons = con.Query<Person>("Select * from persons").ToList();
             }
@@ -63,7 +63,7 @@ namespace NelnetProgrammingExercise.Repositories
                 new Person(name: "Opposetd type negative everythiung", opposedType: PetType.Dog, preferredSize: PetSize.Medium, preferredType: PetType.Dog, preferredClassification: PetClassification.Mammal)
             };
 
-            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            using (var con = new MySqlConnection(Utils.GetHeWhoMustNotBeNamed()))
             {
                 con.Insert(persons);
             }
@@ -72,7 +72,7 @@ namespace NelnetProgrammingExercise.Repositories
 
         public void DeleteItems(List<Person> persons)
         {
-            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            using (var con = new MySqlConnection(Utils.GetHeWhoMustNotBeNamed()))
             {
                 con.Delete(persons);
             }

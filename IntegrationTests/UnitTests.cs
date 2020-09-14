@@ -120,7 +120,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: 20.0);            
 
             //Act
-            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Utils.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;
@@ -136,7 +136,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: .01);
 
             //Act
-            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Utils.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Good;
@@ -153,7 +153,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: 100);
 
             //Act
-            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Utils.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;
@@ -169,7 +169,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: 100);
 
             //Act
-            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Utils.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;
@@ -182,7 +182,7 @@ namespace IntegrationTests
         {
             //arrange
             List<Person> persons = new List<Person>() { new Person("Dogs", preferredType: PetType.Dog, opposedType: PetType.Dog) };
-            Methods.SetSameOppossedToNone(persons);
+            Utils.SetSameOppossedToNone(persons);
 
             //Act
             PetType statusResult = persons[0].OpposedType;
@@ -198,7 +198,7 @@ namespace IntegrationTests
         {
             //arrange
             List<Person> persons = new List<Person>() { new Person("Dogs", preferredClassification: PetClassification.Bird, opposedClassification: PetClassification.Bird) };
-            Methods.SetSameOppossedToNone(persons);
+            Utils.SetSameOppossedToNone(persons);
 
             //Act
             PetClassification statusResult = persons[0].OpposedClassification;
@@ -214,7 +214,7 @@ namespace IntegrationTests
         {
             //arrange
             List<Person> persons = new List<Person>() { new Person("Dogs", preferredSize: PetSize.Small, opposedSize: PetSize.Small) };
-            Methods.SetSameOppossedToNone(persons);
+            Utils.SetSameOppossedToNone(persons);
 
             //Act
             PetSize statusResult = persons[0].OpposedSize;
@@ -235,7 +235,7 @@ namespace IntegrationTests
             PetType expectedResult = PetType.Dog;
 
             List<Person> persons = new List<Person>() { new Person("Dogs", opposedType: expectedResult) };
-            Methods.SetSameOppossedToNone(persons);
+            Utils.SetSameOppossedToNone(persons);
 
             //Act
             PetType statusResult = persons[0].OpposedType;
@@ -252,7 +252,7 @@ namespace IntegrationTests
             PetSize expectedResult = PetSize.Small;
 
             List<Person> persons = new List<Person>() { new Person("Dogs", opposedSize: expectedResult) };
-            Methods.SetSameOppossedToNone(persons);
+            Utils.SetSameOppossedToNone(persons);
 
             //Act
             PetSize statusResult = persons[0].OpposedSize;
@@ -269,7 +269,7 @@ namespace IntegrationTests
             PetClassification expectedResult = PetClassification.Arachnid;
 
             List<Person> persons = new List<Person>() { new Person("Dogs", opposedClassification: expectedResult) };
-            Methods.SetSameOppossedToNone(persons);
+            Utils.SetSameOppossedToNone(persons);
 
             //Act
             PetClassification statusResult = persons[0].OpposedClassification;

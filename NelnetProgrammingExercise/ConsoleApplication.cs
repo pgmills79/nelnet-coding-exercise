@@ -53,7 +53,7 @@ namespace NelnetProgrammingExercise
                         pet.Classification,
                         pet.Size()));
 
-                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", Methods.GetMatchStatus(person, pet)));
+                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", Utils.GetMatchStatus(person, pet)));
                     Console.WriteLine();
                 }
 

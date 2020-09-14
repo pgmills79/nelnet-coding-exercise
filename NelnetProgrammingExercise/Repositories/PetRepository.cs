@@ -46,7 +46,7 @@ namespace NelnetProgrammingExercise.Repositories
 
         public List<Pet> GetItems()
         {
-            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            using (var con = new MySqlConnection(Utils.GetHeWhoMustNotBeNamed()))
             {
                 pets = con.Query<Pet>("SELECT * FROM pets").ToList();
             }
@@ -69,7 +69,7 @@ namespace NelnetProgrammingExercise.Repositories
                 new Pet(name: "Tweety", classification:  PetClassification.Bird,type: PetType.Canary, weight: 0.5)
              };
 
-            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            using (var con = new MySqlConnection(Utils.GetHeWhoMustNotBeNamed()))
             {
                 con.Insert(pets);
             }
@@ -77,7 +77,7 @@ namespace NelnetProgrammingExercise.Repositories
 
         public void DeleteItems(List<Pet> pets)
         {
-            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            using (var con = new MySqlConnection(Utils.GetHeWhoMustNotBeNamed()))
             {
                 con.Delete(pets);
             }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NelnetProgrammingExercise.Helpers
 {
-    public static class Methods
+    public static class Utils
     {
         public static List<Person> SetSameOppossedToNone(List<Person> persons)
         {
