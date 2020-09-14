@@ -36,7 +36,7 @@ namespace IntegrationTests
             _petService = _serviceProvide.GetService<IRepository<Pet>>();
         }
 
-        [Fact]
+        [Fact(Skip = "dapper only")]
         public void AddItems_Should_Add_Persons()
         {
             //arrange
@@ -55,7 +55,7 @@ namespace IntegrationTests
 
         }
 
-        [Fact]
+        [Fact(Skip = "dapper only")]
         public void AddItems_Should_Add_Pets()
         {
             //arrange
