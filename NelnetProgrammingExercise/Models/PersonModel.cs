@@ -3,11 +3,9 @@ using Dapper.Contrib.Extensions;
 
 namespace NelnetProgrammingExercise.Models
 {
-    [Table("person")]
-    public class PersonModel
+    [Table("persons")]
+    public class PersonModel : IEntity
     {
-        public virtual string Name { get; set; }
-
         public virtual PetType PreferredType { get; set; }
         public virtual PetType OpposedType { get; set; }
 

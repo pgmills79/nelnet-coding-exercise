@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Repositories;
 using NelnetProgrammingExercise.Services;
 using System;
@@ -22,8 +23,8 @@ namespace NelnetProgrammingExercise
         private static void RegisterServices()
         {
             var services = new ServiceCollection();
-            services.AddSingleton<IPersonService, PersonRepository>();
-            services.AddSingleton<IPetService, PetRepository>();
+            services.AddSingleton(typeof(IRepository<Person>), typeof(PersonRepository));
+            services.AddSingleton(typeof(IRepository<Pet>), typeof(PetRepository));
             services.AddSingleton<ConsoleApplication>();
             _serviceProvider = services.BuildServiceProvider(true);
         }

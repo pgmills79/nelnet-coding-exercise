@@ -14,10 +14,9 @@ namespace IntegrationTests
         public ServiceFixture()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<IPersonService, PersonRepository>();
-            serviceCollection.AddSingleton<IPetService, PetRepository>();
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-        }
+            serviceCollection.AddSingleton(typeof(IRepository<Person>), typeof(PersonRepository));
+            serviceCollection.AddSingleton(typeof(IRepository<Pet>), typeof(PetRepository));
+            ServiceProvider = serviceCollection.BuildServiceProvider();        }
 
         public ServiceProvider ServiceProvider { get; private set; }
     }
@@ -27,21 +26,22 @@ namespace IntegrationTests
     {
 
         private ServiceProvider _serviceProvide;
-        private IPersonService _personService;
-        private IPetService _petService;
+        private IRepository<Person> _personService;
+        private IRepository<Pet> _petService;
 
         public UnitTests(ServiceFixture fixture)
         {
             _serviceProvide = fixture.ServiceProvider;
-            _personService = _serviceProvide.GetService<IPersonService>();
-            _petService = _serviceProvide.GetService<IPetService>();
+            _personService = _serviceProvide.GetService<IRepository<Person>>();
+            _petService = _serviceProvide.GetService<IRepository<Pet>>();
         }
 
         [Fact]
-        public void GetPersons_Should_Return_Items()
+        public void AddItems_Should_Add_Persons()
         {
             //arrange
-            List<Person> persons = _personService.GetPersons();
+            _personService.AddItems();
+            List<Person> persons = _personService.GetItems();
 
             //Act
             bool statusResult = persons.Count > 0;
@@ -50,13 +50,17 @@ namespace IntegrationTests
             bool expectedResult = true;
             Assert.Equal(expectedResult.ToString(), statusResult.ToString());
 
+            //clean up data
+            _personService.DeleteItems(persons);
+
         }
 
         [Fact]
-        public void GetPets_Should_Return_Items()
+        public void AddItems_Should_Add_Pets()
         {
             //arrange
-            List<Pet> pets = _petService.GetPets();
+            _petService.AddItems();
+            List<Pet> pets = _petService.GetItems();
 
             //Act
             bool statusResult = pets.Count > 0;
@@ -64,6 +68,47 @@ namespace IntegrationTests
             //Assert
             bool expectedResult = true;
             Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
+            //clean up data
+            _petService.DeleteItems(pets);
+
+        }
+
+        [Fact]
+        public void GetPersons_Should_Return_Items()
+        {
+            //arrange
+            _personService.AddItems();
+            List<Person> persons = _personService.GetItems();
+
+            //Act
+            bool statusResult = persons.Count > 0;
+
+            //Assert
+            bool expectedResult = true;
+            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
+            //clean up data
+            _personService.DeleteItems(persons);
+
+        }
+
+        [Fact]
+        public void GetPets_Should_Return_Items()
+        {
+            //arrange
+            _petService.AddItems();
+            List<Pet> pets = _petService.GetItems();
+
+            //Act
+            bool statusResult = pets.Count > 0;
+
+            //Assert
+            bool expectedResult = true;
+            Assert.Equal(expectedResult.ToString(), statusResult.ToString());
+
+            //clean up data
+            _petService.DeleteItems(pets);
 
         }
 
@@ -75,7 +120,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: 20.0);            
 
             //Act
-            MatchStatus statusResult = _personService.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;
@@ -91,7 +136,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: .01);
 
             //Act
-            MatchStatus statusResult = _personService.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Good;
@@ -108,7 +153,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: 100);
 
             //Act
-            MatchStatus statusResult = _personService.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;
@@ -124,7 +169,7 @@ namespace IntegrationTests
             Pet pet = new Pet("Fido", classification: PetClassification.Mammal, type: PetType.Dog, weight: 100);
 
             //Act
-            MatchStatus statusResult = _personService.GetMatchStatus(person, pet);
+            MatchStatus statusResult = Methods.GetMatchStatus(person, pet);
 
             //Assert
             MatchStatus expectedResult = MatchStatus.Bad;

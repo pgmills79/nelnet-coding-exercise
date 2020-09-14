@@ -1,7 +1,6 @@
 ﻿using NelnetProgrammingExercise.Extensions;
 using NelnetProgrammingExercise.Helpers;
 using NelnetProgrammingExercise.Models;
-using NelnetProgrammingExercise.Repositories;
 using NelnetProgrammingExercise.Services;
 using System;
 using System.Collections.Generic;
@@ -10,22 +9,26 @@ namespace NelnetProgrammingExercise
 {
     class ConsoleApplication
     {
-        private readonly IPersonService _personService;
-        private readonly IPetService _petService;           
+        private readonly IRepository<Person> _personService;
+        private readonly IRepository<Pet> _petService;
 
-        public ConsoleApplication(IPersonService persons, IPetService pets)
+        public ConsoleApplication(IRepository<Person> persons, IRepository<Pet> pets)
         {
             _personService = persons;
             _petService = pets;
         }
 
         public void Run()
-        {         
+        {
+            //add items
+            _personService.AddItems();
+            _petService.AddItems();
 
+            //get items
+            List<Person> persons = _personService.GetItems();
+            List<Pet> pets = _petService.GetItems();
 
-            List<Person> persons = _personService.GetPersons();
-            List<Pet> pets = _petService.GetPets();
-
+            
             foreach (Person person in persons)
             {
                 Console.WriteLine("***************************************************************");
@@ -45,19 +48,25 @@ namespace NelnetProgrammingExercise
                     Console.WriteLine(String.Format("Animal: {0} ", pet.Name));
 
                     Console.WriteLine(
-                        String.Format("Type: {0}, Classification: {1}, Size: {2} ", 
-                        pet.Type, 
+                        String.Format("Type: {0}, Classification: {1}, Size: {2} ",
+                        pet.Type,
                         pet.Classification,
                         pet.Size()));
 
-                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", _personService.GetMatchStatus(person, pet)));
+                    Console.WriteLine(String.Format("Fit (Good/Bad): {0} ", Methods.GetMatchStatus(person, pet)));
                     Console.WriteLine();
                 }
 
                 Console.WriteLine("***************************************************************");
             }
 
-            Console.ReadLine();         
+            //clear the data out
+            _personService.DeleteItems(persons);
+            _petService.DeleteItems(pets);
+
+            Console.ReadLine();
+
+           
 
         }
 

@@ -1,18 +1,29 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using MySql.Data.MySqlClient;
+using NelnetProgrammingExercise.Helpers;
 using NelnetProgrammingExercise.Models;
 using NelnetProgrammingExercise.Services;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 
 namespace NelnetProgrammingExercise.Repositories
 {
-    public class PetRepository : IPetService
+    public class PetRepository : IRepository<Pet> 
     {
         private static List<Pet> pets;
 
-        public List<Pet> GetPets()
+        public List<Pet> GetItems()
+        {
+            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            {
+                pets = con.Query<Pet>("SELECT * FROM pets").ToList();
+            }
+
+            return pets;
+        }
+
+        public void AddItems() 
         {
             pets = new List<Pet>
              {
@@ -27,31 +38,25 @@ namespace NelnetProgrammingExercise.Repositories
                 new Pet(name: "Tweety", classification:  PetClassification.Bird,type: PetType.Canary, weight: 0.5)
              };
 
-            return pets;
-        }
-    }
-
-    #region "Extra Credit Dapper"
-
-    public class PetRepositorys : IPetService
-    {
-        private static List<Pet> pets;
-
-        public List<Pet> GetPets()
-        {
-            //I WOULD NEVER put the string directly here.  Was just having problems Xunit reading config file
-            using (var con = new MySqlConnection("server=localhost;uid =pmills;port=3306;pwd=^X2e34cZM0GI;database=practice"))
+            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
             {
-                pets = con.Query<Pet>("SELECT * FROM pet").ToList();
+                con.Insert(pets);
             }
-
-            return pets;
         }
-    }
 
-    #endregion
+        public void DeleteItems(List<Pet> pets) 
+        {
+            using (var con = new MySqlConnection(Methods.GetHeWhoMustNotBeNamed()))
+            {
+                con.Delete(pets);
+            }
+        }    
 
-
-
-
+    }    
 }
+
+
+
+
+
+

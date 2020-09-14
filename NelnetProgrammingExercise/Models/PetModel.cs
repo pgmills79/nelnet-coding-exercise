@@ -3,10 +3,9 @@ using Dapper.Contrib.Extensions;
 
 namespace NelnetProgrammingExercise.Models
 {
-    [Table("pet")]
-    public class PetModel 
+    [Table("pets")]
+    public class PetModel : IEntity
     {
-        public string Name { get; set; }
         public PetClassification Classification { get; set; }
         public PetType Type { get; set; }       
         public double Weight { get; set; }
